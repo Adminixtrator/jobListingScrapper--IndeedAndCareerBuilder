@@ -10,7 +10,7 @@ Install requirements
 $ pip install -r requirements.txt
 ```
 Run app
-```python
+```shell
 $ python jobListingScrapper--IndeedAndCareerBuilder.py
 ```
 
