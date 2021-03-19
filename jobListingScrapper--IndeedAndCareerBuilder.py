@@ -223,6 +223,7 @@ def isRemote(value):
   else:
     return ''
 
+
 if __name__ == '__main__':
   json = []
   responseJson = []
@@ -235,13 +236,14 @@ if __name__ == '__main__':
   jobType = input("Job Type: ")
   experience = input("Experience level: ")
   age = input("Date Posted: ")
+  pageNumber = int(input("Start page: "))
 
-  URL = "https://www.indeed.com/jobs?q="+title.replace(" ", "+")+"+"+"$"+salary+"&l="+location.replace(" ", "+")+"&jt="+jobType.replace("-", '').lower()+"&explvl="+experience.replace("-", "_").lower()+"&fromage="+age+isRemote(remote)
+  URL = "https://www.indeed.com/jobs?q="+title.replace(" ", "+")+"+"+"$"+salary+"&l="+location.replace(" ", "+")+"&jt="+jobType.replace("-", '').lower()+"&explvl="+experience.replace("-", "_").lower()+"&fromage="+age+isRemote(remote)+"&start="+str(pageNumber-10)
   print(URL)
   page = requests.get(URL)
   soup = BeautifulSoup(page.text, "html.parser")
 
-  _URL = "https://www.careerbuilder.com/jobs?keywords="+title.replace(" ", "+")+"&pay="+salary.split(",")[0]+"&location="+location.replace(" ", "+")+"&emp=jt"+"ft"+"&posted="+age+"&cb_workhome="+str(remote).lower()
+  _URL = "https://www.careerbuilder.com/jobs?keywords="+title.replace(" ", "+")+"&pay="+salary.split(",")[0]+"&location="+location.replace(" ", "+")+"&emp=jt"+"ft"+"&posted="+age+"&cb_workhome="+str(remote).lower()+"&page_number="+str(int(pageNumber/10))
   print(_URL)
   _page = requests.get(_URL)
   _soup = BeautifulSoup(_page.text, "html.parser")
@@ -267,9 +269,13 @@ if __name__ == '__main__':
   while cnt < len(iJobTitles):
     json.append({"title": iJobTitles[cnt], "company": iCompanies[cnt], "source": "https://indeed.com", "refUrl": iLinks[cnt], "location": iLocations[cnt], "jobPolicy": iJobPolicies[cnt], "description": iSummaries[cnt], "datePosted": iJobAges[cnt], "salary": 'N/A'})
     cnt+=1
-  
+
+  cnt =0
   while cnt < len(cbJobTitles):
-    json.append({"title": cbJobTitles[cnt], "company": cbCompanies[cnt], "source": "https://careerbuilder.com", "refUrl": cbLinks[cnt], "location": cbLocations[cnt], "jobPolicy": cbJobPolicies[cnt], "description": cbSummaries[cnt], "datePosted": cbJobAges[cnt], "salary": cbSalaries[cnt]})
+    try:
+      json.append({"title": cbJobTitles[cnt], "company": cbCompanies[cnt], "source": "https://careerbuilder.com", "refUrl": cbLinks[cnt], "location": cbLocations[cnt], "jobPolicy": cbJobPolicies[cnt], "description": cbSummaries[cnt], "datePosted": cbJobAges[cnt], "salary": cbSalaries[cnt]})
+    except:
+      pass
     cnt+=1
 
   if len(iJobTitles) == 15:

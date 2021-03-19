@@ -1,5 +1,4 @@
 # _"I became an archaeologist. Before long, my career was in ruins."_
--------------
 
 Create a virtual environment
 ```shell
