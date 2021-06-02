@@ -17,14 +17,14 @@ import urllib
 
 class IndeedScraper():
 
-  def extract_job_title_from_result(soup):
+  def extract_job_title_from_result(self, soup):
     jobs = []
     for div in soup.find_all(name="div", attrs={"class": "row"}):
       for a in div.find_all(name="a", attrs={"data-tn-element": "jobTitle"}):
         jobs.append(a["title"])
     return jobs
 
-  def extract_company_from_result(soup): 
+  def extract_company_from_result(self, soup): 
     companies = []
     for div in soup.find_all(name="div", attrs={"class": "row"}):
       company = div.find_all(name="span", attrs={"class": "company"})
@@ -37,21 +37,21 @@ class IndeedScraper():
           companies.append(span.text.strip())
     return companies
 
-  def extract_refUrl_from_result(soup):
+  def extract_refUrl_from_result(self, soup):
     urls = []
     for div in soup.find_all(name="div", attrs={"class": "row"}):
       for a in div.find_all(name="a", attrs={"data-tn-element": "jobTitle"}):
         urls.append(a['href'])
     return urls
 
-  def extract_locations_from_result(soup):
+  def extract_locations_from_result(self, soup):
     locations = []
     for div in soup.find_all(name="div", attrs={"class": "sjcl"}):
       for a in div.find_all(name="div", attrs={"class": "recJobLoc"}):
         locations.append(a['data-rc-loc'].strip())
     return locations
 
-  def extract_jobPolicy_from_result(soup):
+  def extract_jobPolicy_from_result(self, soup):
     jobPolicy = []
     for div in soup.find_all(name="div", attrs={"class": "sjcl"}):
       for a in div.find_all(name="span", attrs={"class": "remote"}), div.find_all(name="div", attrs={"class": "recJobLoc"}):
@@ -80,14 +80,14 @@ class IndeedScraper():
         # salaries.append(salary.text.strip())
 #   return salaries
 
-  def extract_summary_from_result(soup): 
+  def extract_summary_from_result(self, soup): 
     summaries = []
     spans = soup.findAll("div", attrs={"class": "summary"})
     for span in spans:
       summaries.append(span.text.strip())
     return summaries
 
-  def extract_job_age_from_result(soup):
+  def extract_job_age_from_result(self,  soup):
     jobAge = []
     index = 0
     for div in soup.find_all(name="div", attrs={"class": "row"}):
@@ -102,14 +102,14 @@ class IndeedScraper():
 
 class CareerbuilderScraper():
 
-  def extract_job_title_from_result(soup):
+  def extract_job_title_from_result(self, soup):
     jobs = []
     for div in soup.find_all(name="div", attrs={"id": "jobs_collection"}):
       for a in div.find_all(name="div", attrs={"class": "b"}):
         jobs.append(a.text)
     return jobs
 
-  def extract_company_from_result(soup): 
+  def extract_company_from_result(self, soup): 
     companies = []
     index = 0
     for div in soup.find_all(name="div", attrs={"id": "jobs_collection"}):
@@ -129,14 +129,14 @@ class CareerbuilderScraper():
           index +=3
     return companies
 
-  def extract_refUrl_from_result(soup):
+  def extract_refUrl_from_result(self, soup):
     urls = []
     for div in soup.find_all(name="div", attrs={"id": "jobs_collection"}):
       for a in div.find_all(name="a", attrs={"class": "block"}):
         urls.append(a['href'])
     return urls
 
-  def extract_locations_from_result(soup): 
+  def extract_locations_from_result(self, soup): 
     locations = []
     index = 1
     for div in soup.find_all(name="div", attrs={"id": "jobs_collection"}):
@@ -155,7 +155,7 @@ class CareerbuilderScraper():
           index +=3
     return locations
 
-  def extract_jobPolicy_from_result(soup): 
+  def extract_jobPolicy_from_result(self, soup): 
     jobPolicy = []
     index = 2
     for div in soup.find_all(name="div", attrs={"id": "jobs_collection"}):
@@ -177,7 +177,7 @@ class CareerbuilderScraper():
           index +=3
     return jobPolicy
 
-  def extract_salary_from_result(soup): 
+  def extract_salary_from_results(self, soup): 
     salaries = []
     index = 1
     for div in soup.find_all(name="div", attrs={"id": "jobs_collection"}):
@@ -194,7 +194,7 @@ class CareerbuilderScraper():
           index+=2
     return salaries
 
-  def extract_summary_from_result(soup): 
+  def extract_summary_from_result(self, soup): 
     summaries = []
     index = 0
     for div in soup.find_all(name="div", attrs={"id": "jobs_collection"}):
@@ -208,7 +208,7 @@ class CareerbuilderScraper():
           index+=2
     return summaries
 
-  def extract_job_age_from_result(soup):
+  def extract_job_age_from_result(self, soup):
     jobAge = []
     index = 0
     for div in soup.find_all(name="div", attrs={"id": "jobs_collection"}):
